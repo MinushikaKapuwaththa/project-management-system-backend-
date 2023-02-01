@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using project_management_system_backend.Data;
+using project_management_system_backend.Repostories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,8 @@ var connectionString = builder.Configuration.GetConnectionString("ConnectionStri
 
 builder.Services.AddDbContext<ApiDbContext>(options =>
 options.UseSqlServer(connectionString));
+
+builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 
 var app = builder.Build();
 
