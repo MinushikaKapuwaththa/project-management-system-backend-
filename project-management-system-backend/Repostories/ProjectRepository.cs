@@ -16,5 +16,16 @@ namespace project_management_system_backend.Repostories
             var projectList = _context.projects.ToList();
             return projectList;
         }
+        public async Task <Project> GetProjectByID(int id)
+        {
+            var project = _context.projects.Where(x=>x.ID == id).FirstOrDefault();
+            return project;
+        }
+        public async  Task <Project> CreatProject(Project project)
+        {
+            _context.projects.Add(project);
+            _context.SaveChanges();
+            return project;
+        }
     }
 }
