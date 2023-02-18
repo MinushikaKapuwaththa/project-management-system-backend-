@@ -19,23 +19,23 @@ namespace project_management_system_backend.Controllers
         [HttpGet]
         public IActionResult GetAllProjects()
         {
-
             try
             {
-                return Ok(_projectRepository.GetAllProjects());
+                return Ok( _projectRepository.GetAllProjects());
             }
             catch (Exception ex) 
             {
-                return BadRequest(ex.Message);
+                return BadRequest( ex.Message );
             }
         }
 
         [HttpGet]
+        [Route("/{id}")]
         public IActionResult GetProjectByID(int id)
         {
             try
             {
-              return Ok(_projectRepository.GetProjectByID(id));
+                return Ok(_projectRepository.GetProjectByID(id));
             }
             catch (Exception ex)
             {
@@ -53,8 +53,22 @@ namespace project_management_system_backend.Controllers
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
+                
             }
         }
-        
+        [HttpPost]
+        [Route("/update")]
+        public IActionResult updateproject(Project project)
+        {
+            try
+            {
+                return Ok(_projectRepository.UpdateProject(project));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
     }
 }
