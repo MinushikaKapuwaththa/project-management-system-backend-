@@ -8,7 +8,7 @@ namespace project_management_system_backend.Repostories
         private readonly ApiDbContext _context;
 
         public ProjectRepository(ApiDbContext context)
-        {
+        { 
             _context = context;
         }
         public async Task<List<Project>> GetAllProjects()

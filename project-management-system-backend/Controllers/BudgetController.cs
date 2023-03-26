@@ -1,71 +1,67 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using project_management_system_backend.Models;
 using project_management_system_backend.Repostories;
-
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace project_management_system_backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PojectController : ControllerBase
+    public class BudgetController : ControllerBase
     {
-        private readonly IProjectRepository _projectRepository;
-        public PojectController(IProjectRepository projectRepository)
+        private readonly IBudgetRepository _budgetRepository;
+        public BudgetController(IBudgetRepository budgetRepository)
         {
-            _projectRepository = projectRepository;
+            _budgetRepository = budgetRepository;
         }
         // GET api/<PojectController>/5
         [HttpGet]
-        public IActionResult GetAllProjects()
+        public IActionResult GetAllBudgetDetails()
         {
             try
             {
-                return Ok( _projectRepository.GetAllProjects());
+                return Ok(_budgetRepository.GetAllBudgetDetails());
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
-                return BadRequest( ex.Message );
+                return BadRequest(ex.Message);
             }
         }
 
         [HttpGet]
-        [Route("{id}")]
-        public IActionResult GetProjectByID(int id)
+        [Route("{Id}")]
+        public IActionResult GetBudgetByI(int Id)
         {
             try
             {
-                return Ok(_projectRepository.GetProjectByID(id));
+                return Ok(_budgetRepository.GetBudgetById(Id));
             }
             catch (Exception ex)
             {
-
-
-
                 return BadRequest(ex.Message);
             }
         }
         [HttpPost]
-        public IActionResult CreateProject(Project project)
+        public IActionResult CreateBudget([FromBody] Budget budget)
         {
             try
             {
-                return Ok(_projectRepository.CreatProject(project));
+                return Ok(_budgetRepository.CreateBudget(budget));
             }
 
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
-                
+
             }
         }
-        [HttpPost]
+        [HttpPut]
         [Route("update")]
-        public IActionResult updateproject(Project project)
+        public IActionResult UpdateBudget(Budget budget)
         {
             try
             {
-                return Ok(_projectRepository.UpdateProject(project));
+                return Ok(_budgetRepository.UpdateBudget(budget));
             }
             catch (Exception ex)
             {
