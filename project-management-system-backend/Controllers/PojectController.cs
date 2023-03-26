@@ -8,10 +8,10 @@ namespace project_management_system_backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PojectController : ControllerBase
+    public class ProjectController : ControllerBase
     {
         private readonly IProjectRepository _projectRepository;
-        public PojectController(IProjectRepository projectRepository)
+        public ProjectController(IProjectRepository projectRepository)
         {
             _projectRepository = projectRepository;
         }
