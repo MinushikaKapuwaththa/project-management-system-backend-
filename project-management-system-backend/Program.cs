@@ -4,6 +4,16 @@ using project_management_system_backend.Repostories;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy => policy
+    .AllowAnyOrigin()
+    .AllowAnyHeader()
+    .AllowAnyMethod()
+       );
+});
+
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -17,6 +27,8 @@ builder.Services.AddDbContext<ApiDbContext>(options =>
 options.UseSqlServer(connectionString));
 
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
+builder.Services.AddScoped<IBudgetRepository, BudgetRepository>();
+builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 
 
 
@@ -34,7 +46,8 @@ app.UseCors(x => x
  .AllowAnyMethod()
  .AllowAnyHeader()
  .SetIsOriginAllowed(origin => true) // allow any origin
-                .AllowCredentials()); // allow credentialsS
+ .AllowCredentials()); // allow credentialsS
+
 
 app.UseAuthorization();
 

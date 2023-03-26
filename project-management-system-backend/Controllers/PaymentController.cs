@@ -2,76 +2,73 @@
 using project_management_system_backend.Models;
 using project_management_system_backend.Repostories;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace project_management_system_backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProjectController : ControllerBase
+    public class PaymentController : ControllerBase
     {
-        private readonly IProjectRepository _projectRepository;
-        public ProjectController(IProjectRepository projectRepository)
+        private readonly IPaymentRepository _PaymentRepository;
+        public PaymentController(IPaymentRepository PaymentRepository)
         {
-            _projectRepository = projectRepository;
+            _PaymentRepository = PaymentRepository;
         }
         // GET api/<PojectController>/5
         [HttpGet]
-        public IActionResult GetAllProjects()
+        public IActionResult GetAllPaymentsDetails()
         {
             try
             {
-                return Ok( _projectRepository.GetAllProjects());
+                return Ok(_PaymentRepository.GetAllPaymentsDetails());
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
-                return BadRequest( ex.Message );
+                return BadRequest(ex.Message);
             }
         }
 
         [HttpGet]
-        [Route("{id}")]
-        public IActionResult GetProjectByID(int id)
+        [Route("{Id}")]
+        public IActionResult GetPaymentById(string Id)
         {
             try
             {
-                return Ok(_projectRepository.GetProjectByID(id));
+                return Ok(_PaymentRepository.GetPaymentById(Id));
             }
             catch (Exception ex)
             {
-
-
-
                 return BadRequest(ex.Message);
             }
         }
         [HttpPost]
-        public IActionResult CreateProject(Project project)
+        public IActionResult Createpayment([FromBody] Payment payment)
         {
             try
             {
-                return Ok(_projectRepository.CreatProject(project));
+                return Ok(_PaymentRepository.CreatePayment(payment));
             }
 
             catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 return BadRequest(ex.Message);
-                
+
             }
         }
-        [HttpPost]
+        [HttpPut]
         [Route("update")]
-        public IActionResult updateproject(Project project)
+        public IActionResult Updatepayment(Payment payment)
         {
             try
             {
-                return Ok(_projectRepository.UpdateProject(project));
+                return Ok(_PaymentRepository.Updatepayment(payment));
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
+
 
     }
 }
