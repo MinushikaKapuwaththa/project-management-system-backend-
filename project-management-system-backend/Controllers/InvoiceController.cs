@@ -30,7 +30,7 @@ namespace project_management_system_backend.Controllers
 
         [HttpGet]
         [Route("InvoiceNo/{InvoiceNo}")]
-        public IActionResult GetBudgetById(string InvoiceNo)
+        public IActionResult GetBudgetById(int InvoiceNo)
         {
             try
             {

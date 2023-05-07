@@ -68,12 +68,12 @@ namespace project_management_system_backend.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpGet]
+        [HttpDelete]
         public IActionResult DeleteModule(Module Module)
         {
             try
             {
-                return Ok(_moduleRepository.DeleteModule(vvv));
+                return Ok(_moduleRepository.DeleteModule(3));
             }
             catch (Exception ex)
             {

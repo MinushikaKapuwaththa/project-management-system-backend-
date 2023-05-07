@@ -42,9 +42,9 @@ namespace project_management_system_backend.Repostories
             return module;
         }
 
-        public async Task<Module> DeleteModule(Module module)
+        public async Task<Module> DeleteModule(int id)
         {
-
+            return null;
         }
         //public async List<ModuleTask> GetTasksByModuleId(int moduleId)
         //{

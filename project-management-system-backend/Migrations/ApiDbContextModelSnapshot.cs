@@ -81,6 +81,9 @@ namespace projectmanagementsystembackend.Migrations
                     b.Property<int>("Plannedcost")
                         .HasColumnType("int");
 
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Received")
                         .HasColumnType("int");
 
@@ -95,22 +98,22 @@ namespace projectmanagementsystembackend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("buject");
+                    b.ToTable("budget");
                 });
 
             modelBuilder.Entity("project_management_system_backend.Models.ClientCompany", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("i nt");
+                        .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("CompanyName")
+                    b.Property<string>("CompanyAddress")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CompanyPhone")
+                    b.Property<string>("CompanyName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -136,7 +139,7 @@ namespace projectmanagementsystembackend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("clientcompany");
+                    b.ToTable("clientCompany");
                 });
 
             modelBuilder.Entity("project_management_system_backend.Models.Employee", b =>
@@ -253,6 +256,34 @@ namespace projectmanagementsystembackend.Migrations
                     b.ToTable("history");
                 });
 
+            modelBuilder.Entity("project_management_system_backend.Models.Invoice", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ClientId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("Deleted")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("Updated")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("invoice");
+                });
+
             modelBuilder.Entity("project_management_system_backend.Models.Module", b =>
                 {
                     b.Property<int>("Id")
@@ -317,7 +348,7 @@ namespace projectmanagementsystembackend.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("ModuleId")
+                    b.Property<int>("ModuleId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -429,6 +460,9 @@ namespace projectmanagementsystembackend.Migrations
                     b.Property<string>("PaymentType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("Updated")
                         .HasColumnType("datetime2");
@@ -661,30 +695,6 @@ namespace projectmanagementsystembackend.Migrations
 
                     b.ToTable("projectManagers");
                 });
-            modelBuilder.Entity("project_management_system_backend.Models.Invoice", b =>
-            {
-                b.Property<string>("InvoiceNo")
-                    .ValueGeneratedOnAdd()
-                    .HasColumnType("string");
-
-                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<string>("InvoiceNo"));
-
-                b.Property<DateTime?>("Deleted")
-                    .HasColumnType("datetime2");
-
-                b.Property<int>("ClientId")
-                    .HasColumnType("int");
-
-                b.Property<bool>("IsDeleted")
-                    .HasColumnType("bit");
-
-                b.Property<DateTime?>("Updated")
-                    .HasColumnType("datetime2");
-
-                b.HasKey("InvoiceNo");
-
-                b.ToTable("Invoice");
-            });
 
             modelBuilder.Entity("project_management_system_backend.Models.Assignment", b =>
                 {
@@ -711,19 +721,6 @@ namespace projectmanagementsystembackend.Migrations
 
                     b.Navigation("Employee");
                 });
-            modelBuilder.Entity("project_management_system_backend.Models.Invoice", b =>
-            {
-                b.HasOne("project_management_system_backend.Models.Invoice", "Invoice")
-                    .WithMany("Invoice")
-                    .HasForeignKey("InvoiceNo")
-                    .OnDelete(DeleteBehavior.Cascade)
-                    .IsRequired();
-
-               
-                b.Navigation("Invoice");
-
-               
-            });
 
             modelBuilder.Entity("project_management_system_backend.Models.History", b =>
                 {
@@ -734,9 +731,13 @@ namespace projectmanagementsystembackend.Migrations
 
             modelBuilder.Entity("project_management_system_backend.Models.ModuleTask", b =>
                 {
-                    b.HasOne("project_management_system_backend.Models.Module", null)
-                        .WithMany("TaskId")
-                        .HasForeignKey("ModuleId");
+                    b.HasOne("project_management_system_backend.Models.Module", "Module")
+                        .WithMany("Tasks")
+                        .HasForeignKey("ModuleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Module");
                 });
 
             modelBuilder.Entity("project_management_system_backend.Models.ReqirmentReqDoucment", b =>
@@ -767,11 +768,10 @@ namespace projectmanagementsystembackend.Migrations
                 {
                     b.Navigation("EmployeeAssignments");
                 });
-          
 
             modelBuilder.Entity("project_management_system_backend.Models.Module", b =>
                 {
-                    b.Navigation("TaskId");
+                    b.Navigation("Tasks");
                 });
 
             modelBuilder.Entity("project_management_system_backend.Models.ModuleTask", b =>

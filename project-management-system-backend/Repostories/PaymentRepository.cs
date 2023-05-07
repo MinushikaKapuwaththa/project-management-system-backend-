@@ -13,22 +13,22 @@ namespace project_management_system_backend.Repostories
         }
         public async Task<List<Payment>> GetAllPaymentsDetails()
         {
-            var paymentList = _context.payment.ToList();
+            var paymentList = _context.payments.ToList();
             return paymentList;
         }
         public async Task<Payment> GetPaymentById(string Id)
         {
-            var payment = _context.payment.Where(x => x.Id == Id).FirstOrDefault();
+            var payment = _context.payments.Where(x => x.Id == Id).FirstOrDefault();
             return payment;
         }
         public async Task<List<Payment>> GetPaymentByProjectId(int ProjectId)
         {
-            var payment = _context.payment.Where(x => x.ProjectId == ProjectId).ToList();
+            var payment = _context.payments.Where(x => x.ProjectId == ProjectId).ToList();
             return payment;
         }
         public async Task<Payment> CreatePayment(Payment payment)
         {
-            _context.payment.Add(payment);
+            _context.payments.Add(payment);
             _context.SaveChanges();
             return payment;
         }
@@ -45,7 +45,7 @@ namespace project_management_system_backend.Repostories
             paymentToUpdate.Updated = payment.Updated;
             paymentToUpdate.IsDeleted = payment.IsDeleted;
             paymentToUpdate.Deleted = payment.Deleted;
-            _context.payment.Update(paymentToUpdate );
+            _context.payments.Update(paymentToUpdate);
             _context.SaveChanges();
             return payment;
         }

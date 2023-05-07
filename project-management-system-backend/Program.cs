@@ -37,7 +37,7 @@ app.UseCors(x => x
  .AllowAnyMethod()
  .AllowAnyHeader()
  .SetIsOriginAllowed(origin => true) // allow any origin
-��������������� .AllowCredentials()); // allow credentialsS
+.AllowCredentials()); // allow credentialsS
 
 app.UseAuthorization();
 
