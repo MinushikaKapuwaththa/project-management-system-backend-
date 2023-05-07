@@ -2,10 +2,10 @@
 {
     public class BaseModel
     {
-        public DateTime Created { get; set; }
-        public DateTime Updated { get; set; }
-        public bool  IsDeleted { get; set; }
-        public DateTime Deleted { get; set; }
-
+        public DateTime Created { get; set; } = DateTime.Now;
+        public DateTime? Updated { get; set; }
+        public bool IsDeleted { get; set; } = false;
+        public DateTime? Deleted { get; set; }
+        
     }
 }

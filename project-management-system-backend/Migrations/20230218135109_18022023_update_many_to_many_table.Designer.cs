@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using project_management_system_backend.Data;
 
@@ -11,9 +12,11 @@ using project_management_system_backend.Data;
 namespace projectmanagementsystembackend.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    partial class ApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230218135109_18022023_update_many_to_many_table")]
+    partial class _18022023updatemanytomanytable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -93,19 +96,16 @@ namespace projectmanagementsystembackend.Migrations
                     b.Property<int>("yetToReceive")
                         .HasColumnType("int");
 
-                    b.Property<string>("RecordedBy")
-                        .HasColumnType("varchar(max)");
-
                     b.HasKey("Id");
 
-                    b.ToTable("budget");
+                    b.ToTable("buject");
                 });
 
             modelBuilder.Entity("project_management_system_backend.Models.ClientCompany", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("i nt");
+                        .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
@@ -187,6 +187,9 @@ namespace projectmanagementsystembackend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("AssId")
+                        .HasColumnType("int");
+
                     b.Property<int>("AssigmentId")
                         .HasColumnType("int");
 
@@ -195,6 +198,9 @@ namespace projectmanagementsystembackend.Migrations
 
                     b.Property<DateTime?>("Deleted")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("EmpId")
+                        .HasColumnType("int");
 
                     b.Property<int>("EmployeeID")
                         .HasColumnType("int");
@@ -445,7 +451,7 @@ namespace projectmanagementsystembackend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("payment");
+                    b.ToTable("payments");
                 });
 
             modelBuilder.Entity("project_management_system_backend.Models.Project", b =>
@@ -537,6 +543,9 @@ namespace projectmanagementsystembackend.Migrations
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<int>("ReqDoucmentId")
+                        .HasColumnType("int");
 
                     b.Property<int>("ReqDoucumentID")
                         .HasColumnType("int");
@@ -664,30 +673,6 @@ namespace projectmanagementsystembackend.Migrations
 
                     b.ToTable("projectManagers");
                 });
-            modelBuilder.Entity("project_management_system_backend.Models.Invoice", b =>
-            {
-                b.Property<string>("InvoiceNo")
-                    .ValueGeneratedOnAdd()
-                    .HasColumnType("string");
-
-                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<string>("InvoiceNo"));
-
-                b.Property<DateTime?>("Deleted")
-                    .HasColumnType("datetime2");
-
-                b.Property<int>("ClientId")
-                    .HasColumnType("int");
-
-                b.Property<bool>("IsDeleted")
-                    .HasColumnType("bit");
-
-                b.Property<DateTime?>("Updated")
-                    .HasColumnType("datetime2");
-
-                b.HasKey("InvoiceNo");
-
-                b.ToTable("Invoice");
-            });
 
             modelBuilder.Entity("project_management_system_backend.Models.Assignment", b =>
                 {
@@ -714,19 +699,6 @@ namespace projectmanagementsystembackend.Migrations
 
                     b.Navigation("Employee");
                 });
-            modelBuilder.Entity("project_management_system_backend.Models.Invoice", b =>
-            {
-                b.HasOne("project_management_system_backend.Models.Invoice", "Invoice")
-                    .WithMany("Invoice")
-                    .HasForeignKey("InvoiceNo")
-                    .OnDelete(DeleteBehavior.Cascade)
-                    .IsRequired();
-
-               
-                b.Navigation("Invoice");
-
-               
-            });
 
             modelBuilder.Entity("project_management_system_backend.Models.History", b =>
                 {
@@ -770,7 +742,6 @@ namespace projectmanagementsystembackend.Migrations
                 {
                     b.Navigation("EmployeeAssignments");
                 });
-          
 
             modelBuilder.Entity("project_management_system_backend.Models.Module", b =>
                 {

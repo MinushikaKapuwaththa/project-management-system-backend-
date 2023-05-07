@@ -13,14 +13,65 @@ namespace project_management_system_backend.Controllers
         private readonly IProjectRepository _projectRepository;
         public PojectController(IProjectRepository projectRepository)
         {
-            _projectRepository= projectRepository;
+            _projectRepository = projectRepository;
         }
         // GET api/<PojectController>/5
         [HttpGet]
-        public Task<List<Project>> GetAllProjects()
+        public IActionResult GetAllProjects()
         {
-            return _projectRepository.GetAllProjects();
+            try
+            {
+                return Ok( _projectRepository.GetAllProjects());
+            }
+            catch (Exception ex) 
+            {
+                return BadRequest( ex.Message );
+            }
         }
-        
+
+        [HttpGet]
+        [Route("{id}")]
+        public IActionResult GetProjectByID(int id)
+        {
+            try
+            {
+                return Ok(_projectRepository.GetProjectByID(id));
+            }
+            catch (Exception ex)
+            {
+
+
+
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpPost]
+        public IActionResult CreateProject(Project project)
+        {
+            try
+            {
+                return Ok(_projectRepository.CreatProject(project));
+            }
+
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+                
+            }
+        }
+        [HttpPost]
+        [Route("update")]
+        public IActionResult updateproject(Project project)
+        {
+            try
+            {
+                return Ok(_projectRepository.UpdateProject(project));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
     }
 }
