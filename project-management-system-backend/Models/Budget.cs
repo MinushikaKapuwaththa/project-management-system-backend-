@@ -9,8 +9,7 @@
         public int Plannedcost { get; set; }
         public int Received { get; set; }
         public int yetToReceive { get; set; }
-        
-
+       
 
     }
 }

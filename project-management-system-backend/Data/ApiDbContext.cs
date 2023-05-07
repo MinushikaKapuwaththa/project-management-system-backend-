@@ -9,13 +9,13 @@ namespace project_management_system_backend.Data
         public ApiDbContext(DbContextOptions<ApiDbContext> options) : base(options) { }
 
         public DbSet<Project> projects { get; set; }
-        public DbSet<Budget> budget { get; set; }
+        public DbSet<Budget> buject { get; set; }
         public DbSet<Employee> employee { get; set; }
         public DbSet<History> history { get; set; }
         public DbSet<Module> modules { get; set; }
         public DbSet<Notification> notifications { get; set; }
         public DbSet<OverDueTime> overdue { get; set; }
-        public DbSet<Payment> payment { get;set; }
+        public DbSet<Payment> payments { get;set; }
         public DbSet<projectManager> projectManagers { get; set; }
         public DbSet<Requirment> requirments { get; set; }
         public DbSet<ModuleTask> tasks { get; set; }
