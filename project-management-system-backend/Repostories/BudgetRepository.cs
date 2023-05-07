@@ -21,6 +21,12 @@ namespace project_management_system_backend.Repostories
             var budget = _context.budget.Where(x => x.Id == Id).FirstOrDefault();
             return budget;
         }
+
+        public async Task<Budget> GetBudgetByProjectId(int projectId)
+        {
+            var budget = _context.budget.Where(x => x.ProjectId == projectId).FirstOrDefault();
+            return budget;
+        }
         public async Task<Budget> CreateBudget(Budget budget)
         {
             _context.budget.Add(budget);
@@ -30,6 +36,7 @@ namespace project_management_system_backend.Repostories
         public async Task<Budget> UpdateBudget(Budget budget)
         {
             var budgetToUpdate = GetBudgetById(budget.Id).Result;
+            budgetToUpdate.ProjectId = budget.ProjectId;
             budgetToUpdate.TotalBudget = budget.TotalBudget;
             budgetToUpdate.HourlyCost=budget.HourlyCost;
             budgetToUpdate.Actualcost=budget.Actualcost;

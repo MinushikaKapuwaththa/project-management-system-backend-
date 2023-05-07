@@ -1,25 +1,26 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using project_management_system_backend.Models;
-using project_management_system_backend.Repostories;
+using project_management_system_backend.Repostories;        
 
 namespace project_management_system_backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PaymentController : ControllerBase
+    public class InvoiceController : ControllerBase
     {
-        private readonly IPaymentRepository _PaymentRepository;
-        public PaymentController(IPaymentRepository PaymentRepository)
+        private readonly IInvoiceRepository _InvoiceRepository;
+        public InvoiceController(IInvoiceRepository InvoiceRepository)
         {
-            _PaymentRepository = PaymentRepository;
+            _InvoiceRepository = InvoiceRepository;
         }
         // GET api/<PojectController>/5
         [HttpGet]
-        public IActionResult GetAllPaymentsDetails()
+        public IActionResult GetAllInvoiceDetails()
         {
             try
             {
-                return Ok(_PaymentRepository.GetAllPaymentsDetails());
+                return Ok(_InvoiceRepository.GetAllInvoiceDetails());
             }
             catch (Exception ex)
             {
@@ -28,60 +29,59 @@ namespace project_management_system_backend.Controllers
         }
 
         [HttpGet]
-        [Route("Id/{Id}")]
-        public IActionResult GetPaymentById(string Id)
+        [Route("InvoiceNo/{InvoiceNo}")]
+        public IActionResult GetBudgetById(string InvoiceNo)
         {
             try
             {
-                return Ok(_PaymentRepository.GetPaymentById(Id));
+                return Ok(_InvoiceRepository.GetInvoiceNo(InvoiceNo));
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
+
         [HttpGet]
-        [Route("ProjectId/{ProjectId}")]
-        public IActionResult GetPaymentByProjectId(int ProjectId)
+        [Route("ClientId/{ClientId}")]
+        public IActionResult GetAllInvoiceByClientId(int ClientId)
         {
             try
             {
-                return Ok(_PaymentRepository.GetPaymentByProjectId(ProjectId));
+                return Ok(_InvoiceRepository.GetAllInvoiceByClientId(ClientId));
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
+
         [HttpPost]
-        public IActionResult Createpayment([FromBody] Payment payment)
+        public IActionResult CreateInvoice([FromBody] Invoice invoice)
         {
             try
             {
-                return Ok(_PaymentRepository.CreatePayment(payment));
+                return Ok(_InvoiceRepository.CreateInvoice(invoice));
             }
 
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
                 return BadRequest(ex.Message);
 
             }
         }
         [HttpPut]
         [Route("update")]
-        public IActionResult Updatepayment(Payment payment)
+        public IActionResult UpdateInvoice(Invoice invoice)
         {
             try
             {
-                return Ok(_PaymentRepository.Updatepayment(payment));
+                return Ok(_InvoiceRepository.UpdateInvoice(invoice));
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
-
-
     }
 }

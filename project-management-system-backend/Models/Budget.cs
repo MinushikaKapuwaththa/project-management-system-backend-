@@ -3,6 +3,7 @@
     public class Budget:BaseModel
     {
         public int Id { get; set; }
+        public int ProjectId { get; set; }
         public int TotalBudget { get; set; }  
         public int HourlyCost { get; set; }
         public int Actualcost { get; set; }
