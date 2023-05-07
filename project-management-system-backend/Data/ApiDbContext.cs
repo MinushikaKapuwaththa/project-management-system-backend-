@@ -6,6 +6,8 @@ namespace project_management_system_backend.Data
 {
     public class ApiDbContext:DbContext
     {
+        internal object client;
+
         public ApiDbContext(DbContextOptions<ApiDbContext> options) : base(options) { }
 
         public DbSet<Project> projects { get; set; }
@@ -21,7 +23,7 @@ namespace project_management_system_backend.Data
         public DbSet<ModuleTask> tasks { get; set; }
         public DbSet<User> users { get;}
         public DbSet<Assignment> assignment { get; set; }
-        public DbSet<ClientCompany> clientcompany { get; set; }
-        
+        public DbSet<ClientCompany> clientCompany { get; set; }
+        public DbSet<Invoice> invoice { get; set; }
     }
 }

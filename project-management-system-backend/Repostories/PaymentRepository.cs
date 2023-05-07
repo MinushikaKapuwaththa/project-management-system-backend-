@@ -21,16 +21,23 @@ namespace project_management_system_backend.Repostories
             var payment = _context.payment.Where(x => x.Id == Id).FirstOrDefault();
             return payment;
         }
+        public async Task<List<Payment>> GetPaymentByProjectId(int ProjectId)
+        {
+            var payment = _context.payment.Where(x => x.ProjectId == ProjectId).ToList();
+            return payment;
+        }
         public async Task<Payment> CreatePayment(Payment payment)
         {
             _context.payment.Add(payment);
             _context.SaveChanges();
             return payment;
         }
+        
         public async Task<Payment> Updatepayment(Payment payment)
         {
             var paymentToUpdate = GetPaymentById(payment.Id).Result;
             paymentToUpdate.Paidby = payment.Paidby;
+            paymentToUpdate.ProjectId = payment.ProjectId;
             paymentToUpdate.PaymentType = payment.PaymentType;
             paymentToUpdate.amount = payment.amount;
             paymentToUpdate.attachment = payment.attachment;

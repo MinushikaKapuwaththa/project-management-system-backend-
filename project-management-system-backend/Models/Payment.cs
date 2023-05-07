@@ -3,6 +3,7 @@
     public class Payment:BaseModel
     {
         public string Id { get; set; }
+        public int ProjectId { get; set; }
         public string Paidby { get; set; }
         public string PaymentType { get; set; }
         public int amount{ get; set; }
