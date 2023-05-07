@@ -93,12 +93,9 @@ namespace projectmanagementsystembackend.Migrations
                     b.Property<int>("yetToReceive")
                         .HasColumnType("int");
 
-                    b.Property<string>("RecordedBy")
-                        .HasColumnType("varchar(max)");
-
                     b.HasKey("Id");
 
-                    b.ToTable("budget");
+                    b.ToTable("buject");
                 });
 
             modelBuilder.Entity("project_management_system_backend.Models.ClientCompany", b =>
@@ -445,7 +442,7 @@ namespace projectmanagementsystembackend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("payment");
+                    b.ToTable("payments");
                 });
 
             modelBuilder.Entity("project_management_system_backend.Models.Project", b =>

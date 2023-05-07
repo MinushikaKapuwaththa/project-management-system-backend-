@@ -2,16 +2,14 @@
 using project_management_system_backend.Models;
 using project_management_system_backend.Repostories;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace project_management_system_backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PojectController : ControllerBase
+    public class ProjectController : ControllerBase
     {
         private readonly IProjectRepository _projectRepository;
-        public PojectController(IProjectRepository projectRepository)
+        public ProjectController(IProjectRepository projectRepository)
         {
             _projectRepository = projectRepository;
         }
@@ -21,16 +19,16 @@ namespace project_management_system_backend.Controllers
         {
             try
             {
-                return Ok( _projectRepository.GetAllProjects());
+                return Ok(_projectRepository.GetAllProjects());
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
-                return BadRequest( ex.Message );
+                return BadRequest(ex.Message);
             }
         }
 
         [HttpGet]
-        [Route("{id}")]
+        [Route("/{id}")]
         public IActionResult GetProjectByID(int id)
         {
             try
@@ -39,12 +37,10 @@ namespace project_management_system_backend.Controllers
             }
             catch (Exception ex)
             {
-
-
-
                 return BadRequest(ex.Message);
             }
         }
+
         [HttpPost]
         public IActionResult CreateProject(Project project)
         {
@@ -56,11 +52,11 @@ namespace project_management_system_backend.Controllers
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
-                
+
             }
         }
         [HttpPost]
-        [Route("update")]
+        [Route("/update")]
         public IActionResult updateproject(Project project)
         {
             try
