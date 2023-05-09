@@ -33,6 +33,9 @@ builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 builder.Services.AddScoped<IInvoiceRepository, InvoiceRepository>();
 builder.Services.AddScoped<IClientCompanyRepository, ClientCompanyRepository>();
 
+
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -42,7 +45,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors();
+app.UseCors(x => x
+ .AllowAnyMethod()
+ .AllowAnyHeader()
+ .SetIsOriginAllowed(origin => true) // allow any origin
+ .AllowCredentials()); // allow credentialsS
+
 
 app.UseAuthorization();
 
