@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>project_management_system_backend</RootNamespace>
+    <UserSecretsId>vvvv</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

@@ -7,6 +7,5 @@ namespace project_management_system_backend.Models
         [Key]
         public string InvoiceNo { get; set; }
         public int ClientId { get; set;}
-   
        }
 }
