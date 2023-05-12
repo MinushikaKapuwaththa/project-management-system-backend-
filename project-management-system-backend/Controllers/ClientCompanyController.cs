@@ -10,6 +10,8 @@ namespace project_management_system_backend.Controllers
     public class ClientCompanyController : ControllerBase
     {
         private readonly IClientCompanyRepository _clientCompanyRepository;
+        private object clientToDelete;
+
         public ClientCompanyController(IClientCompanyRepository clientCompanyRepository)
         {
             _clientCompanyRepository = clientCompanyRepository;
@@ -18,7 +20,7 @@ namespace project_management_system_backend.Controllers
         [HttpGet]
         public IActionResult GetAllClientDetails()
         {
-            try 
+            try
             {
                 return Ok(_clientCompanyRepository.GetAllClientDetails());
             }
@@ -56,6 +58,25 @@ namespace project_management_system_backend.Controllers
 
             }
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteClient(int id)
+        {
+            var clientToDelete = await _clientCompanyRepository.GetClientId(id);
+
+            if (clientToDelete == null)
+            {
+                return NotFound();
+            }
+
+            await _clientCompanyRepository.DeleteClient(clientToDelete);
+
+            return NoContent();
+        }
+
+
+
+
         [HttpPut]
         [Route("update")]
         public IActionResult UpdateClient(ClientCompany clientCompany)

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using project_management_system_backend.Data;
 
@@ -11,9 +12,11 @@ using project_management_system_backend.Data;
 namespace projectmanagementsystembackend.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    partial class ApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230510184224_os")]
+    partial class os
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -535,11 +538,11 @@ namespace projectmanagementsystembackend.Migrations
 
             modelBuilder.Entity("project_management_system_backend.Models.Project", b =>
                 {
-                    b.Property<int>("ProjectId")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProjectId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<int>("Budget")
                         .HasColumnType("int");
@@ -599,7 +602,7 @@ namespace projectmanagementsystembackend.Migrations
                     b.Property<DateTime?>("Updated")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("ProjectId");
+                    b.HasKey("ID");
 
                     b.ToTable("projects");
                 });
