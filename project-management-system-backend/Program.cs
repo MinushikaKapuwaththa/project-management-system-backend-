@@ -29,6 +29,7 @@ builder.Services.AddScoped<IDocumentRepository, DocumentRepository>();
 builder.Services.AddScoped<IDocumentUploaderService, DocumentUploaderService>();
 builder.Services.AddSingleton<FileExtensionContentTypeProvider>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddScoped<IClientPersonRepository, ClientPersonRepository>();
 
 var app = builder.Build();
 

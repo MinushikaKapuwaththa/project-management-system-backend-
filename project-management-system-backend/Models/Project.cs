@@ -1,6 +1,6 @@
 ﻿namespace project_management_system_backend.Models
 {
-    public class Project : BaseModel
+    public class Project:BaseModel
     {
         public int ProjectId { get; set; }
         public string Name { get; set; }
@@ -18,3 +18,4 @@
         public string Key { get; set; }
     }
 }
+    
