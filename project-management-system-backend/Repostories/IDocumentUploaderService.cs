@@ -1,6 +1,6 @@
 ﻿using project_management_system_backend.Models;
 
-namespace project_management_system_backend.Repostories
+namespace project_management_system_backend.Repostories 
 {
     public interface IDocumentUploaderService
     {

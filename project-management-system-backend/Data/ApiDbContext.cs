@@ -30,6 +30,7 @@ namespace project_management_system_backend.Data
         public DbSet<Invoice> invoice { get; set; }
         //public object Documents { get; internal set; }
         public DbSet<Document> Documents { get; set; }
+        public DbSet<Client> Clients { get; set; }
 
     }
 }

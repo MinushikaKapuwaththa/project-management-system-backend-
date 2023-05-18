@@ -9,6 +9,6 @@
         public string Company { get; set; }
         public string DocumentPath { get; set; }
         public int Status { get; set; }
-        public int? ProjectId { get; internal set; }
+        public int? ProjectId { get; /*internal*/ set; }
     }
 }

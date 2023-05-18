@@ -2,7 +2,7 @@
 
 namespace project_management_system_backend.Models
 {
-    public class ClientCompany : BaseModel
+    public class ClientCompany:BaseModel
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
@@ -13,6 +13,6 @@ namespace project_management_system_backend.Models
         public string? CompanyEmail { get; set; }
         public DateTime StartDate { get; set; }
     }
-
-
+    
+    
 }
