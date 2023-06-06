@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using project_management_system_backend.Models;
 using project_management_system_backend.Repostories;
 
@@ -9,6 +10,7 @@ namespace project_management_system_backend.Controllers
     public class PaymentController : ControllerBase
     {
         private readonly IPaymentRepository _PaymentRepository;
+
         public PaymentController(IPaymentRepository PaymentRepository)
         {
             _PaymentRepository = PaymentRepository;
@@ -29,7 +31,7 @@ namespace project_management_system_backend.Controllers
 
         [HttpGet]
         [Route("Id/{Id}")]
-        public IActionResult GetPaymentById(string Id)
+        public IActionResult GetPaymentById(int Id)
         {
             try
             {
@@ -53,6 +55,8 @@ namespace project_management_system_backend.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        
+
         [HttpPost]
         public IActionResult Createpayment([FromBody] Payment payment)
         {
@@ -85,3 +89,4 @@ namespace project_management_system_backend.Controllers
 
     }
 }
+

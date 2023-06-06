@@ -16,9 +16,9 @@ namespace project_management_system_backend.Repostories
             var invoiceList = _context.invoice.ToList();
             return invoiceList;
         }
-        public async Task<Invoice> GetInvoiceNo(string InvoiceNo)
+        public async Task<Invoice> GetInvoiceNo(int Id)
         {
-            var invoice = _context.invoice.Where(x => x.InvoiceNo == InvoiceNo).FirstOrDefault();
+            var invoice = _context.invoice.Where(x => x.Id == Id).FirstOrDefault();
             return invoice;
         }
 
@@ -35,7 +35,7 @@ namespace project_management_system_backend.Repostories
         }
         public async Task<Invoice> UpdateInvoice(Invoice invoice)
         {
-            var invoiceToUpdate =GetInvoiceNo(invoice.InvoiceNo).Result;
+            var invoiceToUpdate =GetInvoiceNo(invoice.Id).Result;
             invoiceToUpdate.ClientId = invoice.ClientId;
             invoiceToUpdate.Created = invoice.Created;
             invoiceToUpdate.Updated = invoice.Updated;

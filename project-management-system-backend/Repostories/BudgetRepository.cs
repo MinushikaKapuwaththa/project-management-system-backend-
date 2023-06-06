@@ -29,8 +29,10 @@ namespace project_management_system_backend.Repostories
         }
         public async Task<Budget> CreateBudget(Budget budget)
         {
+            //budget.yetToReceive = budget.TotalBudget;
             _context.budget.Add(budget);
             _context.SaveChanges();
+            
             return budget;
         }
         public async Task<Budget> UpdateBudget(Budget budget)
