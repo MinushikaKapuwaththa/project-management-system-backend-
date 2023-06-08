@@ -1,19 +1,11 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.StaticFiles;
 using project_management_system_backend.Controllers;
 using project_management_system_backend.Data;
 using project_management_system_backend.Repostories;
+using static project_management_system_backend.Repostories.DocumentUploaderService;
 
 var builder = WebApplication.CreateBuilder(args);
-
-
-builder.Services.AddCors(options =>
-{
-    options.AddDefaultPolicy(policy => policy
-    .AllowAnyOrigin()
-    .AllowAnyHeader()
-    .AllowAnyMethod()
-       );
-});
 
 // Add services to the container.
 
@@ -28,13 +20,15 @@ builder.Services.AddDbContext<ApiDbContext>(options =>
 options.UseSqlServer(connectionString));
 
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
+builder.Services.AddScoped<IModuleRepository, ModuleRepository>();
 builder.Services.AddScoped<IBudgetRepository, BudgetRepository>();
 builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 builder.Services.AddScoped<IInvoiceRepository, InvoiceRepository>();
 builder.Services.AddScoped<IClientCompanyRepository, ClientCompanyRepository>();
-
-
-
+builder.Services.AddScoped<IDocumentRepository, DocumentRepository>();
+builder.Services.AddScoped<IDocumentUploaderService, DocumentUploaderService>();
+builder.Services.AddSingleton<FileExtensionContentTypeProvider>();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 
@@ -49,8 +43,7 @@ app.UseCors(x => x
  .AllowAnyMethod()
  .AllowAnyHeader()
  .SetIsOriginAllowed(origin => true) // allow any origin
- .AllowCredentials()); // allow credentialsS
-
+.AllowCredentials()); // allow credentialsS
 
 app.UseAuthorization();
 

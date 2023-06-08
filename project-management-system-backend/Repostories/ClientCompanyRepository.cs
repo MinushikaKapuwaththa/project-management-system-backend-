@@ -1,5 +1,6 @@
 ﻿using project_management_system_backend.Data;
 using project_management_system_backend.Models;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace project_management_system_backend.Repostories
 {
@@ -27,18 +28,23 @@ namespace project_management_system_backend.Repostories
             _context.SaveChanges();
             return clientCompany;
         }
+
+        public async Task DeleteClient(ClientCompany clientToDelete)
+        {
+            _context.clientCompany.Remove(clientToDelete);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<ClientCompany> UpdateClient(ClientCompany clientCompany)
         {
-            var clientToUpdate = GetClientId(clientCompany.Id).Result;
-            clientToUpdate.CompanyName = clientCompany.CompanyName;
-            clientToUpdate.CompanyAddress = clientCompany.CompanyAddress;
-            clientToUpdate.Email = clientCompany.Email;
-            clientToUpdate.PhoneNumber = clientCompany.PhoneNumber;
-            clientToUpdate.Created = clientCompany.Created;
-            clientToUpdate.Updated = clientCompany.Updated;
-            clientToUpdate.IsDeleted = clientCompany.IsDeleted;
-            clientToUpdate.Deleted = clientCompany.Deleted;
-            _context.clientCompany.Update(clientToUpdate);
+            var ClientToUpdate = GetClientId(clientCompany.Id).Result;
+            ClientToUpdate.CompanyName = clientCompany.CompanyName;
+            ClientToUpdate.OwnerName = clientCompany.OwnerName;
+            ClientToUpdate.Status = clientCompany.Status;
+            ClientToUpdate.ContactNumber = clientCompany.ContactNumber;
+            ClientToUpdate.CompanyEmail = clientCompany.CompanyEmail;
+            ClientToUpdate.StartDate = DateTime.Now;
+            _context.clientCompany.Update(ClientToUpdate);
             _context.SaveChanges();
             return clientCompany;
         }

@@ -55,7 +55,6 @@ namespace project_management_system_backend.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        
 
         [HttpPost]
         public IActionResult Createpayment([FromBody] Payment payment)

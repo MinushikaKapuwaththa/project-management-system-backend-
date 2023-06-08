@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using project_management_system_backend.Data;
 
@@ -11,9 +12,11 @@ using project_management_system_backend.Data;
 namespace projectmanagementsystembackend.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    partial class ApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230512195517_document")]
+    partial class document
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -101,52 +104,11 @@ namespace projectmanagementsystembackend.Migrations
                     b.ToTable("budget");
                 });
 
-            modelBuilder.Entity("project_management_system_backend.Models.Client", b =>
-                {
-                    b.Property<int>("ClientId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ClientId"));
-
-                    b.Property<string>("ClientName")
-                        .IsRequired()
-                        .HasMaxLength(2000)
-                        .HasColumnType("nvarchar(2000)");
-
-                    b.Property<int>("ClientType")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Company")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<string>("ContactNumber")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<string>("Country")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.HasKey("ClientId");
-
-                    b.ToTable("Clients");
-                });
-
             modelBuilder.Entity("project_management_system_backend.Models.ClientCompany", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("i nt");
+                        .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
@@ -642,8 +604,6 @@ namespace projectmanagementsystembackend.Migrations
 
                     b.HasKey("ProjectId");
 
-                    b.HasIndex("ClientId");
-
                     b.ToTable("projects");
                 });
 
@@ -726,30 +686,6 @@ namespace projectmanagementsystembackend.Migrations
 
                     b.ToTable("projectManagers");
                 });
-            modelBuilder.Entity("project_management_system_backend.Models.Invoice", b =>
-            {
-                b.Property<string>("InvoiceNo")
-                    .ValueGeneratedOnAdd()
-                    .HasColumnType("string");
-
-                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<string>("InvoiceNo"));
-
-                b.Property<DateTime?>("Deleted")
-                    .HasColumnType("datetime2");
-
-                b.Property<int>("ClientId")
-                    .HasColumnType("int");
-
-                b.Property<bool>("IsDeleted")
-                    .HasColumnType("bit");
-
-                b.Property<DateTime?>("Updated")
-                    .HasColumnType("datetime2");
-
-                b.HasKey("InvoiceNo");
-
-                b.ToTable("Invoice");
-            });
 
             modelBuilder.Entity("project_management_system_backend.Models.Assignment", b =>
                 {
@@ -785,19 +721,6 @@ namespace projectmanagementsystembackend.Migrations
 
                     b.Navigation("Employee");
                 });
-            modelBuilder.Entity("project_management_system_backend.Models.Invoice", b =>
-            {
-                b.HasOne("project_management_system_backend.Models.Invoice", "Invoice")
-                    .WithMany("Invoice")
-                    .HasForeignKey("InvoiceNo")
-                    .OnDelete(DeleteBehavior.Cascade)
-                    .IsRequired();
-
-               
-                b.Navigation("Invoice");
-
-               
-            });
 
             modelBuilder.Entity("project_management_system_backend.Models.History", b =>
                 {
@@ -817,30 +740,15 @@ namespace projectmanagementsystembackend.Migrations
                     b.Navigation("Module");
                 });
 
-            modelBuilder.Entity("project_management_system_backend.Models.Project", b =>
-                {
-                    b.HasOne("project_management_system_backend.Models.Client", null)
-                        .WithMany("Projects")
-                        .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("project_management_system_backend.Models.Assignment", b =>
                 {
                     b.Navigation("EmployeeAssignments");
-                });
-
-            modelBuilder.Entity("project_management_system_backend.Models.Client", b =>
-                {
-                    b.Navigation("Projects");
                 });
 
             modelBuilder.Entity("project_management_system_backend.Models.Employee", b =>
                 {
                     b.Navigation("EmployeeAssignments");
                 });
-          
 
             modelBuilder.Entity("project_management_system_backend.Models.Module", b =>
                 {

@@ -6,17 +6,18 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace projectmanagementsystembackend.Migrations
 {
     /// <inheritdoc />
-    public partial class _18022023intialmigration : Migration
+    public partial class @int : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "buject",
+                name: "budget",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    ProjectId = table.Column<int>(type: "int", nullable: false),
                     TotalBudget = table.Column<int>(type: "int", nullable: false),
                     HourlyCost = table.Column<int>(type: "int", nullable: false),
                     Actualcost = table.Column<int>(type: "int", nullable: false),
@@ -30,19 +31,21 @@ namespace projectmanagementsystembackend.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_buject", x => x.Id);
+                    table.PrimaryKey("PK_budget", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "clientcompany",
+                name: "clientCompany",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CompanyName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CompanyPhone = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CompanyName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OwnerName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ContactNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CompanyEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Updated = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
@@ -50,7 +53,7 @@ namespace projectmanagementsystembackend.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_clientcompany", x => x.Id);
+                    table.PrimaryKey("PK_clientCompany", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -70,6 +73,23 @@ namespace projectmanagementsystembackend.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_employee", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "invoice",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ClientId = table.Column<int>(type: "int", nullable: false),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Updated = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    Deleted = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_invoice", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -133,6 +153,7 @@ namespace projectmanagementsystembackend.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProjectId = table.Column<int>(type: "int", nullable: false),
                     Paidby = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PaymentType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     amount = table.Column<int>(type: "int", nullable: false),
@@ -170,11 +191,18 @@ namespace projectmanagementsystembackend.Migrations
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Estimatetime = table.Column<int>(type: "int", nullable: false),
-                    actualtime = table.Column<int>(type: "int", nullable: false),
-                    Remainingtime = table.Column<int>(type: "int", nullable: false),
-                    Startdate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Enddate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ClientId = table.Column<int>(type: "int", nullable: false),
+                    ReportedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    EstimatedTime = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Budget = table.Column<int>(type: "int", nullable: false),
+                    HourlyRate = table.Column<int>(type: "int", nullable: false),
+                    Lead = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Key = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Updated = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
@@ -183,6 +211,23 @@ namespace projectmanagementsystembackend.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_projects", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ReqDocument",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Attachment = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Updated = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    Deleted = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ReqDocument", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -237,7 +282,7 @@ namespace projectmanagementsystembackend.Migrations
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AcutalTime = table.Column<int>(type: "int", nullable: false),
                     EstimatedTime = table.Column<int>(type: "int", nullable: false),
-                    ModuleId = table.Column<int>(type: "int", nullable: true),
+                    ModuleId = table.Column<int>(type: "int", nullable: false),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Updated = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
@@ -250,7 +295,38 @@ namespace projectmanagementsystembackend.Migrations
                         name: "FK_tasks_modules_ModuleId",
                         column: x => x.ModuleId,
                         principalTable: "modules",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ReqirmentReqDoucment",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ReqirmentId = table.Column<int>(type: "int", nullable: false),
+                    ReqDoucumentID = table.Column<int>(type: "int", nullable: false),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Updated = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    Deleted = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ReqirmentReqDoucment", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ReqirmentReqDoucment_ReqDocument_ReqDoucumentID",
+                        column: x => x.ReqDoucumentID,
+                        principalTable: "ReqDocument",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ReqirmentReqDoucment_requirments_ReqirmentId",
+                        column: x => x.ReqirmentId,
+                        principalTable: "requirments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -301,15 +377,65 @@ namespace projectmanagementsystembackend.Migrations
                         principalColumn: "Id");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "EmployeeAssignment",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    EmployeeID = table.Column<int>(type: "int", nullable: false),
+                    AssigmentId = table.Column<int>(type: "int", nullable: false),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Updated = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    Deleted = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EmployeeAssignment", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_EmployeeAssignment_assignment_AssigmentId",
+                        column: x => x.AssigmentId,
+                        principalTable: "assignment",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EmployeeAssignment_employee_EmployeeID",
+                        column: x => x.EmployeeID,
+                        principalTable: "employee",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_assignment_ModuleTaskId",
                 table: "assignment",
                 column: "ModuleTaskId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_EmployeeAssignment_AssigmentId",
+                table: "EmployeeAssignment",
+                column: "AssigmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EmployeeAssignment_EmployeeID",
+                table: "EmployeeAssignment",
+                column: "EmployeeID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_history_ModuleTaskId",
                 table: "history",
                 column: "ModuleTaskId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ReqirmentReqDoucment_ReqDoucumentID",
+                table: "ReqirmentReqDoucment",
+                column: "ReqDoucumentID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ReqirmentReqDoucment_ReqirmentId",
+                table: "ReqirmentReqDoucment",
+                column: "ReqirmentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_tasks_ModuleId",
@@ -321,19 +447,19 @@ namespace projectmanagementsystembackend.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "assignment");
+                name: "budget");
 
             migrationBuilder.DropTable(
-                name: "buject");
+                name: "clientCompany");
 
             migrationBuilder.DropTable(
-                name: "clientcompany");
-
-            migrationBuilder.DropTable(
-                name: "employee");
+                name: "EmployeeAssignment");
 
             migrationBuilder.DropTable(
                 name: "history");
+
+            migrationBuilder.DropTable(
+                name: "invoice");
 
             migrationBuilder.DropTable(
                 name: "notifications");
@@ -351,10 +477,22 @@ namespace projectmanagementsystembackend.Migrations
                 name: "projects");
 
             migrationBuilder.DropTable(
-                name: "requirments");
+                name: "ReqirmentReqDoucment");
 
             migrationBuilder.DropTable(
                 name: "users");
+
+            migrationBuilder.DropTable(
+                name: "assignment");
+
+            migrationBuilder.DropTable(
+                name: "employee");
+
+            migrationBuilder.DropTable(
+                name: "ReqDocument");
+
+            migrationBuilder.DropTable(
+                name: "requirments");
 
             migrationBuilder.DropTable(
                 name: "tasks");

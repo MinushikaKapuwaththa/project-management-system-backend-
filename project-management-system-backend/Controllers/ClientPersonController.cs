@@ -7,23 +7,22 @@ namespace project_management_system_backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ClientCompanyController : ControllerBase
+    public class ClientPersonController : ControllerBase
     {
-        private readonly IClientCompanyRepository _clientCompanyRepository;
-
+        private readonly IClientPersonRepository _clientPersonRepository;
         private object clientToDelete;
-        
-        public ClientCompanyController(IClientCompanyRepository clientCompanyRepository)
+
+        public ClientPersonController(IClientPersonRepository clientPersonRepository)
         {
-            _clientCompanyRepository = clientCompanyRepository;
+            _clientPersonRepository = clientPersonRepository;
         }
         // GET api/<PojectController>/5
         [HttpGet]
         public IActionResult GetAllClientDetails()
         {
-            try 
+            try
             {
-                return Ok(_clientCompanyRepository.GetAllClientDetails());
+                return Ok(_clientPersonRepository.GetAllClientsDetails());
             }
             catch (Exception ex)
             {
@@ -37,7 +36,7 @@ namespace project_management_system_backend.Controllers
         {
             try
             {
-                return Ok(_clientCompanyRepository.GetClientId(Id));
+                return Ok(_clientPersonRepository.GetClientId(Id));
             }
             catch (Exception ex)
             {
@@ -46,11 +45,11 @@ namespace project_management_system_backend.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateClient([FromBody] ClientCompany clientCompany)
+        public IActionResult CreateClient([FromBody] Client client)
         {
             try
             {
-                return Ok(_clientCompanyRepository.CreateClient(clientCompany));
+                return Ok(_clientPersonRepository.CreateClient(client));
             }
 
             catch (Exception ex)
@@ -63,31 +62,34 @@ namespace project_management_system_backend.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteClient(int id)
         {
-            var clientToDelete = await _clientCompanyRepository.GetClientId(id);
+            var clientToDelete = await _clientPersonRepository.GetClientId(id);
 
             if (clientToDelete == null)
             {
                 return NotFound();
             }
 
-            await _clientCompanyRepository.DeleteClient(clientToDelete);
+            await _clientPersonRepository.DeleteClient(clientToDelete);
 
             return NoContent();
         }
+
+
+
+
         [HttpPut]
         [Route("update")]
-        public IActionResult UpdateClient(ClientCompany clientCompany)
+        public IActionResult UpdateClient(Client client)
         {
             try
             {
-                return Ok(_clientCompanyRepository.UpdateClient(clientCompany));
+                return Ok(_clientPersonRepository.UpdateClient(client));
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
-
 
 
 

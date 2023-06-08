@@ -15,12 +15,17 @@ namespace project_management_system_backend.Repostories
         }
         public async Task<List<Payment>> GetAllPaymentsDetails()
         {
-            var paymentList = _context.payment.ToList();
+            var paymentList = _context.payments.ToList();
             return paymentList;
         }
         public async Task<Payment> GetPaymentById(int Id)
         {
-            var payment = _context.payment.Where(x => x.Id == Id).FirstOrDefault();
+            var payment = _context.payments.Where(x => x.Id == Id).FirstOrDefault();
+            return payment;
+        }
+        public async Task<List<Payment>> GetPaymentByProjectId(int ProjectId)
+        {
+            var payment = _context.payments.Where(x => x.ProjectId == ProjectId).ToList();
             return payment;
         }
         public async Task<List<Payment>> GetPaymentByProjectId(int ProjectId)
@@ -30,7 +35,7 @@ namespace project_management_system_backend.Repostories
         }
         public async Task<Payment> CreatePayment(Payment payment)
         {
-            
+
             var budgetToUpdate = _context.budget.Where(x => x.ProjectId == payment.ProjectId).FirstOrDefault();
             if (budgetToUpdate != null && payment.amount <= budgetToUpdate.yetToReceive)
             {
@@ -60,7 +65,7 @@ namespace project_management_system_backend.Repostories
             paymentToUpdate.Updated = payment.Updated;
             paymentToUpdate.IsDeleted = payment.IsDeleted;
             paymentToUpdate.Deleted = payment.Deleted;
-            _context.payment.Update(paymentToUpdate );
+            _context.payments.Update(paymentToUpdate);
             _context.SaveChanges();
             return payment;
         }

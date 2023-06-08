@@ -10,8 +10,6 @@
         public double Plannedcost { get; set; }
         public double Received { get; set; }
         public double yetToReceive { get; set; }
-        
-
 
     }
 }

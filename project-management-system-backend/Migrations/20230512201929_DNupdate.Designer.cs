@@ -12,8 +12,8 @@ using project_management_system_backend.Data;
 namespace projectmanagementsystembackend.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    [Migration("20230218133059_18022023_intial_migration")]
-    partial class _18022023intialmigration
+    [Migration("20230512201929_DNupdate")]
+    partial class DNupdate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -84,6 +84,9 @@ namespace projectmanagementsystembackend.Migrations
                     b.Property<int>("Plannedcost")
                         .HasColumnType("int");
 
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Received")
                         .HasColumnType("int");
 
@@ -98,7 +101,7 @@ namespace projectmanagementsystembackend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("buject");
+                    b.ToTable("budget");
                 });
 
             modelBuilder.Entity("project_management_system_backend.Models.ClientCompany", b =>
@@ -109,12 +112,13 @@ namespace projectmanagementsystembackend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("CompanyName")
-                        .IsRequired()
+                    b.Property<string>("CompanyEmail")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CompanyPhone")
-                        .IsRequired()
+                    b.Property<string>("CompanyName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ContactNumber")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Created")
@@ -123,15 +127,16 @@ namespace projectmanagementsystembackend.Migrations
                     b.Property<DateTime?>("Deleted")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
+                    b.Property<string>("OwnerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("Updated")
@@ -139,7 +144,59 @@ namespace projectmanagementsystembackend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("clientcompany");
+                    b.ToTable("clientCompany");
+                });
+
+            modelBuilder.Entity("project_management_system_backend.Models.Document", b =>
+                {
+                    b.Property<int>("DocumentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DocumentId"));
+
+                    b.Property<string>("ActualFileName")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("ClientName")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<string>("Company")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<string>("FilePath")
+                        .IsRequired()
+                        .HasMaxLength(5000)
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<int?>("ProjectId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UploadTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("DocumentId");
+
+                    b.HasIndex("ProjectId");
+
+                    b.ToTable("Documents");
                 });
 
             modelBuilder.Entity("project_management_system_backend.Models.Employee", b =>
@@ -177,6 +234,41 @@ namespace projectmanagementsystembackend.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("employee");
+                });
+
+            modelBuilder.Entity("project_management_system_backend.Models.EmployeeAssignment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AssigmentId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("Deleted")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("EmployeeID")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("Updated")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssigmentId");
+
+                    b.HasIndex("EmployeeID");
+
+                    b.ToTable("EmployeeAssignment");
                 });
 
             modelBuilder.Entity("project_management_system_backend.Models.History", b =>
@@ -219,6 +311,34 @@ namespace projectmanagementsystembackend.Migrations
                     b.HasIndex("ModuleTaskId");
 
                     b.ToTable("history");
+                });
+
+            modelBuilder.Entity("project_management_system_backend.Models.Invoice", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ClientId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("Deleted")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("Updated")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("invoice");
                 });
 
             modelBuilder.Entity("project_management_system_backend.Models.Module", b =>
@@ -285,7 +405,7 @@ namespace projectmanagementsystembackend.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("ModuleId")
+                    b.Property<int>("ModuleId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -398,6 +518,9 @@ namespace projectmanagementsystembackend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("Updated")
                         .HasColumnType("datetime2");
 
@@ -415,11 +538,17 @@ namespace projectmanagementsystembackend.Migrations
 
             modelBuilder.Entity("project_management_system_backend.Models.Project", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("ProjectId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProjectId"));
+
+                    b.Property<int>("Budget")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ClientId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
@@ -427,63 +556,55 @@ namespace projectmanagementsystembackend.Migrations
                     b.Property<DateTime?>("Deleted")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("Enddate")
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Estimatetime")
+                    b.Property<string>("EstimatedTime")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("HourlyRate")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<string>("Key")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Lead")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Remainingtime")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Startdate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("Updated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("actualtime")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("projects");
-                });
-
-            modelBuilder.Entity("project_management_system_backend.Models.Requirment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("Deleted")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Distripation")
+                    b.Property<string>("ReportedBy")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("Updated")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("Id");
+                    b.HasKey("ProjectId");
 
-                    b.ToTable("requirments");
+                    b.ToTable("projects");
                 });
 
             modelBuilder.Entity("project_management_system_backend.Models.User", b =>
@@ -573,6 +694,34 @@ namespace projectmanagementsystembackend.Migrations
                         .HasForeignKey("ModuleTaskId");
                 });
 
+            modelBuilder.Entity("project_management_system_backend.Models.Document", b =>
+                {
+                    b.HasOne("project_management_system_backend.Models.Project", "Project")
+                        .WithMany()
+                        .HasForeignKey("ProjectId");
+
+                    b.Navigation("Project");
+                });
+
+            modelBuilder.Entity("project_management_system_backend.Models.EmployeeAssignment", b =>
+                {
+                    b.HasOne("project_management_system_backend.Models.Assignment", "Assigment")
+                        .WithMany("EmployeeAssignments")
+                        .HasForeignKey("AssigmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("project_management_system_backend.Models.Employee", "Employee")
+                        .WithMany("EmployeeAssignments")
+                        .HasForeignKey("EmployeeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Assigment");
+
+                    b.Navigation("Employee");
+                });
+
             modelBuilder.Entity("project_management_system_backend.Models.History", b =>
                 {
                     b.HasOne("project_management_system_backend.Models.ModuleTask", null)
@@ -582,14 +731,28 @@ namespace projectmanagementsystembackend.Migrations
 
             modelBuilder.Entity("project_management_system_backend.Models.ModuleTask", b =>
                 {
-                    b.HasOne("project_management_system_backend.Models.Module", null)
-                        .WithMany("TaskId")
-                        .HasForeignKey("ModuleId");
+                    b.HasOne("project_management_system_backend.Models.Module", "Module")
+                        .WithMany("Tasks")
+                        .HasForeignKey("ModuleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Module");
+                });
+
+            modelBuilder.Entity("project_management_system_backend.Models.Assignment", b =>
+                {
+                    b.Navigation("EmployeeAssignments");
+                });
+
+            modelBuilder.Entity("project_management_system_backend.Models.Employee", b =>
+                {
+                    b.Navigation("EmployeeAssignments");
                 });
 
             modelBuilder.Entity("project_management_system_backend.Models.Module", b =>
                 {
-                    b.Navigation("TaskId");
+                    b.Navigation("Tasks");
                 });
 
             modelBuilder.Entity("project_management_system_backend.Models.ModuleTask", b =>
