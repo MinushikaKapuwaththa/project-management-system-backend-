@@ -34,11 +34,10 @@ namespace project_management_system_backend.Repositories
 
         public async Task DeleteProjectAsync(Project projectToDelete)
         {
-            //Need to remove associated Tasks and Documents first
-            //var associatedTasks = _context.Tasks.Where(t => t.ProjectId == projectToDelete.ProjectId);
+           
             var associatedDocs = _context.Documents.Where(d => d.ProjectId == projectToDelete.ProjectId);
 
-            //_context.Tasks.RemoveRange(associatedTasks);
+           
             _context.Documents.RemoveRange(associatedDocs);
 
             _context.Projects.Remove(projectToDelete);
