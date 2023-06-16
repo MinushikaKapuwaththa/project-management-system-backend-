@@ -2,9 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using project_management_system_backend.Models;
 
-using System.Xml.Linq;
-
-
 namespace project_management_system_backend.Data
 {
     public class ApiDbContext:DbContext
@@ -20,17 +17,14 @@ namespace project_management_system_backend.Data
         public DbSet<Module> modules { get; set; }
         public DbSet<Notification> notifications { get; set; }
         public DbSet<OverDueTime> overdue { get; set; }
-        public DbSet<Payment> payments { get; set; }
+        public DbSet<Payment> payments { get;set; }
         public DbSet<projectManager> projectManagers { get; set; }
-        //public DbSet<Requirment> requirments { get; set; }
+        public DbSet<Requirment> requirments { get; set; }
         public DbSet<ModuleTask> tasks { get; set; }
-        public DbSet<User> users { get; }
+        public DbSet<User> users { get;}
         public DbSet<Assignment> assignment { get; set; }
         public DbSet<ClientCompany> clientCompany { get; set; }
         public DbSet<Invoice> invoice { get; set; }
-        //public object Documents { get; internal set; }
-        public DbSet<Document> Documents { get; set; }
-        public DbSet<Client> Clients { get; set; }
 
     }
 }

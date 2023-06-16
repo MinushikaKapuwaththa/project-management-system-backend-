@@ -2,20 +2,13 @@
 {
     public class Project:BaseModel
     {
-        public int ProjectId { get; set; }
+        public int ID { get; set; }
         public string Name { get; set; }
-        public int ClientId { get; set; }
-        public string ReportedBy { get; set; }
-        public string Type { get; set; }
-        public string EstimatedTime { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
-        public int Budget { get; set; }
-        public int HourlyRate { get; set; }
-        public string Lead { get; set; }
-        public int Status { get; set; }
-        public string Description { get; set; }
-        public string Key { get; set; }
+        public int Estimatetime { get; set; }
+        public int actualtime { get; set; }
+        public int Remainingtime { get; set; }
+        public DateTime Startdate { get; set; }
+        public DateTime Enddate { get; set; }
     }
 }
     

@@ -55,22 +55,6 @@ namespace project_management_system_backend.Controllers
 
             }
         }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProject(int id)
-        {
-            var projectToDelete = await _projectRepository.GetProjectByID(id);
-
-            if (projectToDelete == null)
-            {
-                return NotFound();
-            }
-
-            await _projectRepository.DeleteProject(projectToDelete);
-
-            return NoContent();
-        }
-
         [HttpPost]
         [Route("/update")]
         public IActionResult updateproject(Project project)

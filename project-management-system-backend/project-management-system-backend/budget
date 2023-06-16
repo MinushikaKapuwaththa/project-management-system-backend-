@@ -1,8 +1,0 @@
-0vvv public bool Get(string email,string password )
-    {
-        if(email=="sachini@gmail.com" && password=="sachini123"){
-            return true;
-        }else{
-            return false;
-        }
-    }
