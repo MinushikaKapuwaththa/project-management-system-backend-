@@ -1,4 +1,4 @@
-﻿using project_management_system_backend.Models;
+﻿using project_management_system_backend.Dtos.DocumentDtos;
 
 namespace project_management_system_backend.Repostories 
 {
