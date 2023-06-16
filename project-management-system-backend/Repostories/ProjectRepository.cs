@@ -1,43 +1,67 @@
-﻿using project_management_system_backend.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using project_management_system_backend.Data;
 using project_management_system_backend.Models;
+using project_management_system_backend.Repositories;
+using Task = System.Threading.Tasks.Task;
 
-namespace project_management_system_backend.Repostories
+namespace project_management_system_backend.Repositories
 {
-    public class ProjectRepository:IProjectRepository
+    public class ProjectRepository : IProjectRepository
     {
         private readonly ApiDbContext _context;
 
         public ProjectRepository(ApiDbContext context)
         {
-            _context = context;
+            _context = context ?? throw new ArgumentNullException(nameof(context));
         }
-        public async Task<List<Project>> GetAllProjects()
+
+        public async Task<Project> GetProjectAsync(int projectId)
         {
-            var projectList = _context.projects.ToList();
-            return projectList;
+            return await _context.Projects.FirstOrDefaultAsync(p => p.ProjectId == projectId);
         }
-        public async Task<Project> GetProjectByID(int id)
+
+        public async Task<List<Project>> GetProjectsAsync()
         {
-            var project = _context.projects.Where(x=>x.ID == id).FirstOrDefault();
-            return project;
+            return await _context.Projects.OrderBy(p => p.ProjectId).ToListAsync();
         }
-        public async  Task <Project> CreatProject(Project project)
+
+        public async Task CreateProjectAsync(Project projectToCreate)
         {
-            _context.projects.Add(project);
-            _context.SaveChanges();
-            return project;
+            projectToCreate.ClientId = projectToCreate.ClientId == 0 ? null : projectToCreate.ClientId;
+            _context.Projects.Add(projectToCreate);
+            await _context.SaveChangesAsync();
         }
-        public async Task<Project> UpdateProject(Project project)
+
+        public async Task DeleteProjectAsync(Project projectToDelete)
         {
-            var projectToUpdate = GetProjectByID(project.ID).Result;
-            projectToUpdate.Name = project.Name;
-            projectToUpdate.Estimatetime = project.Estimatetime;
-            projectToUpdate.actualtime = project.actualtime;
-            projectToUpdate.Remainingtime = project.Remainingtime;
-            projectToUpdate.Updated = DateTime.Now;
-            _context.projects.Update(projectToUpdate);
-            _context.SaveChanges();
-            return project;
+           
+            var associatedDocs = _context.Documents.Where(d => d.ProjectId == projectToDelete.ProjectId);
+
+           
+            _context.Documents.RemoveRange(associatedDocs);
+
+            _context.Projects.Remove(projectToDelete);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateProjectAsync(Project oldProject, Project newProject)
+        {
+            newProject.ClientId = newProject.ClientId == 0 ? null : newProject.ClientId;
+            oldProject.Name = newProject.Name;
+            oldProject.Key = newProject.Key;
+            oldProject.Description = newProject.Description;
+            oldProject.ClientId = newProject.ClientId;
+            oldProject.ReportedBy = newProject.ReportedBy;
+            oldProject.EstimatedTime = newProject.EstimatedTime;
+            oldProject.StartDate = newProject.StartDate;
+            oldProject.EndDate = newProject.EndDate;
+            oldProject.Budget = newProject.Budget;
+            oldProject.HourlyRate = newProject.HourlyRate;
+            oldProject.Lead = newProject.Lead;
+            oldProject.Status = newProject.Status;
+
+            _context.Projects.Update(oldProject);
+            await _context.SaveChangesAsync();
         }
     }
 }
