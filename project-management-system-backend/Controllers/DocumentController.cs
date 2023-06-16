@@ -2,7 +2,7 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
-using project_management_system_backend.Models;
+using project_management_system_backend.Dtos.DocumentDtos;
 using project_management_system_backend.Repostories;
 
 

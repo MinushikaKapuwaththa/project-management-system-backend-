@@ -142,47 +142,43 @@ namespace projectmanagementsystembackend.Migrations
                     b.ToTable("Clients");
                 });
 
-            modelBuilder.Entity("project_management_system_backend.Models.ClientCompany", b =>
+            modelBuilder.Entity("project_management_system_backend.Models.Company", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("CompanyId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CompanyId"));
 
                     b.Property<string>("CompanyEmail")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("CompanyName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<string>("ContactNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("Deleted")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<string>("OwnerName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Status")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte>("Status")
+                        .HasColumnType("tinyint");
 
-                    b.Property<DateTime?>("Updated")
-                        .HasColumnType("datetime2");
+                    b.HasKey("CompanyId");
 
-                    b.HasKey("Id");
-
-                    b.ToTable("clientCompany");
+                    b.ToTable("companies");
                 });
 
             modelBuilder.Entity("project_management_system_backend.Models.Document", b =>
@@ -585,17 +581,12 @@ namespace projectmanagementsystembackend.Migrations
                     b.Property<int>("Budget")
                         .HasColumnType("int");
 
-                    b.Property<int>("ClientId")
+                    b.Property<int?>("ClientId")
                         .HasColumnType("int");
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("Deleted")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()
+                        .HasMaxLength(5000)
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("EndDate")
@@ -608,24 +599,24 @@ namespace projectmanagementsystembackend.Migrations
                     b.Property<int>("HourlyRate")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Key")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Lead")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("ReportedBy")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
@@ -635,16 +626,14 @@ namespace projectmanagementsystembackend.Migrations
 
                     b.Property<string>("Type")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("Updated")
-                        .HasColumnType("datetime2");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.HasKey("ProjectId");
 
                     b.HasIndex("ClientId");
 
-                    b.ToTable("projects");
+                    b.ToTable("Projects");
                 });
 
             modelBuilder.Entity("project_management_system_backend.Models.User", b =>
@@ -782,11 +771,11 @@ namespace projectmanagementsystembackend.Migrations
 
             modelBuilder.Entity("project_management_system_backend.Models.Project", b =>
                 {
-                    b.HasOne("project_management_system_backend.Models.Client", null)
+                    b.HasOne("project_management_system_backend.Models.Client", "Client")
                         .WithMany("Projects")
-                        .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ClientId");
+
+                    b.Navigation("Client");
                 });
 
             modelBuilder.Entity("project_management_system_backend.Models.Assignment", b =>
