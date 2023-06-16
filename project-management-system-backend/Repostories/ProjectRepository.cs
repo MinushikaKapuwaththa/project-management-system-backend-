@@ -35,6 +35,7 @@ namespace project_management_system_backend.Repostories
             projectToUpdate.actualtime = project.actualtime;
             projectToUpdate.Remainingtime = project.Remainingtime;
             projectToUpdate.Updated = DateTime.Now;
+            projectToUpdate.Enddate = project.Enddate;
             _context.projects.Update(projectToUpdate);
             _context.SaveChanges();
             return project;
