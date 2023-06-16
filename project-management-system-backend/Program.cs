@@ -5,8 +5,6 @@ using project_management_system_backend.Data;
 using project_management_system_backend.Repostories;
 using static project_management_system_backend.Repostories.DocumentUploaderService;
 
-using project_management_system_backend.Repositories;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -16,30 +14,22 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//services cors
-builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
-{
-    builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
-}));
-
 var connectionString = builder.Configuration.GetConnectionString("ConnectionString");
 
 builder.Services.AddDbContext<ApiDbContext>(options =>
 options.UseSqlServer(connectionString));
 
-
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
-//builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 builder.Services.AddScoped<IModuleRepository, ModuleRepository>();
 builder.Services.AddScoped<IBudgetRepository, BudgetRepository>();
 builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 builder.Services.AddScoped<IInvoiceRepository, InvoiceRepository>();
-builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
+builder.Services.AddScoped<IClientCompanyRepository, ClientCompanyRepository>();
 builder.Services.AddScoped<IDocumentRepository, DocumentRepository>();
 builder.Services.AddScoped<IDocumentUploaderService, DocumentUploaderService>();
 builder.Services.AddSingleton<FileExtensionContentTypeProvider>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-builder.Services.AddScoped<IClientRepository, ClientRepository>();
+builder.Services.AddScoped<IClientPersonRepository, ClientPersonRepository>();
 
 var app = builder.Build();
 
@@ -50,7 +40,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors("corsapp");
+app.UseCors(x => x
+ .AllowAnyMethod()
+ .AllowAnyHeader()
+ .SetIsOriginAllowed(origin => true) // allow any origin
+.AllowCredentials()); // allow credentialsS
+
 app.UseAuthorization();
 
 app.MapControllers();

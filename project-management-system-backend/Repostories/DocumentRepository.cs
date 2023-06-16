@@ -1,9 +1,7 @@
 ﻿
 using project_management_system_backend.Data;
-using project_management_system_backend.Dtos.DocumentDtos;
-using Microsoft.EntityFrameworkCore;
 using project_management_system_backend.Models;
-using Task = System.Threading.Tasks.Task;
+using Microsoft.EntityFrameworkCore;
 
 namespace project_management_system_backend.Repostories
 {
