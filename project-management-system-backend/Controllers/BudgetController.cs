@@ -29,8 +29,8 @@ namespace project_management_system_backend.Controllers
         }
 
         [HttpGet]
-        [Route("{Id}")]
-        public IActionResult GetBudgetByI(int Id)
+        [Route("Id/{Id}")]
+        public IActionResult GetBudgetById(int Id)
         {
             try
             {
@@ -41,6 +41,21 @@ namespace project_management_system_backend.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet]
+        [Route("ProjectId/{projectId}")]
+        public IActionResult GetBudgetByProjectId(int projectId)
+        {
+            try
+            {
+                return Ok(_budgetRepository.GetBudgetByProjectId(projectId));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpPost]
         public IActionResult CreateBudget([FromBody] Budget budget)
         {

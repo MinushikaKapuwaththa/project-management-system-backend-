@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using project_management_system_backend.Models;
 using project_management_system_backend.Repostories;
 
@@ -6,20 +7,20 @@ namespace project_management_system_backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProjectController : ControllerBase
+    public class ClientCompanyController : ControllerBase
     {
-        private readonly IProjectRepository _projectRepository;
-        public ProjectController(IProjectRepository projectRepository)
+        private readonly IClientCompanyRepository _clientCompanyRepository;
+        public ClientCompanyController(IClientCompanyRepository clientCompanyRepository)
         {
-            _projectRepository = projectRepository;
+            _clientCompanyRepository = clientCompanyRepository;
         }
         // GET api/<PojectController>/5
         [HttpGet]
-        public IActionResult GetAllProjects()
+        public IActionResult GetAllClientDetails()
         {
-            try
+            try 
             {
-                return Ok(_projectRepository.GetAllProjects());
+                return Ok(_clientCompanyRepository.GetAllClientDetails());
             }
             catch (Exception ex)
             {
@@ -28,12 +29,12 @@ namespace project_management_system_backend.Controllers
         }
 
         [HttpGet]
-        [Route("/{id}")]
-        public IActionResult GetProjectByID(int id)
+        [Route("Id/{Id}")]
+        public IActionResult GetClientId(int Id)
         {
             try
             {
-                return Ok(_projectRepository.GetProjectByID(id));
+                return Ok(_clientCompanyRepository.GetClientId(Id));
             }
             catch (Exception ex)
             {
@@ -42,11 +43,11 @@ namespace project_management_system_backend.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateProject(Project project)
+        public IActionResult CreateClient([FromBody] ClientCompany clientCompany)
         {
             try
             {
-                return Ok(_projectRepository.CreatProject(project));
+                return Ok(_clientCompanyRepository.CreateClient(clientCompany));
             }
 
             catch (Exception ex)
@@ -55,19 +56,22 @@ namespace project_management_system_backend.Controllers
 
             }
         }
-        [HttpPost]
-        [Route("/update")]
-        public IActionResult updateproject(Project project)
+        [HttpPut]
+        [Route("update")]
+        public IActionResult UpdateClient(ClientCompany clientCompany)
         {
             try
             {
-                return Ok(_projectRepository.UpdateProject(project));
+                return Ok(_clientCompanyRepository.UpdateClient(clientCompany));
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
+
+
+
 
     }
 }
