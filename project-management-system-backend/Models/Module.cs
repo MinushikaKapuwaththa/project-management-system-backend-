@@ -7,6 +7,11 @@
         public string Description { get; set; }
         public string Priority { get; set; }
         public List<ModuleTask> Tasks { get; set; }
+        public int EstimatedTime { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public DateTime EstimatedEndDate { get; set; }
+
 
     }
 }

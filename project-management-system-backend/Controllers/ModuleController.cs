@@ -17,7 +17,7 @@ namespace project_management_system_backend.Controllers
 
         [HttpGet]
         public IActionResult GetAllModules()
-        {
+        { 
             try
             {
                 return Ok(_moduleRepository.GetAllModules());
