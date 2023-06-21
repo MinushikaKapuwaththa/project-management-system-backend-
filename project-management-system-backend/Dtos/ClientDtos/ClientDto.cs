@@ -15,7 +15,7 @@ namespace project_management_system_backend.Dtos.ClientDtos
                 return Enum.GetName((ClientTypeEnum)ClientType) ?? string.Empty;
             }
         }
-        public string Company { get; set; }
+        public string CompanyId  { get; set; }
         public string ContactNumber { get; set; }
         public string Email { get; set; }
         public string Country { get; set; }

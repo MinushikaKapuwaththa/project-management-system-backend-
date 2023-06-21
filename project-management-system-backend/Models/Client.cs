@@ -17,9 +17,9 @@ namespace project_management_system_backend.Models
         [Range(1, 4)]
         public ClientTypeEnum ClientType { get; set; }
 
-        [Required]
-        [MaxLength(250)]
-        public string Company { get; set; }
+        //[Required]
+        //[MaxLength(250)]
+        //public string Company { get; set; }
 
         [Required]
         [MaxLength(250)]
@@ -32,7 +32,13 @@ namespace project_management_system_backend.Models
         [MaxLength(250)]
         public string Country { get; set; }
         public virtual List<Project> Projects { get; set; }
-    
+
+        [ForeignKey("Company")]
+        public int? CompanyId { get; set; }
+
+        //Foreign Key to company
+        public virtual Company? Company { get; set; }
+
 
 
     }

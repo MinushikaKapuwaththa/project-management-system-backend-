@@ -20,7 +20,7 @@ namespace project_management_system_backend.Models
 
         [Required]
         [MaxLength(250)]
-        public string ClientName { get; set; }
+        public string ClientId { get; set; }
 
         [Required]
         [MaxLength(250)]

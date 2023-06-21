@@ -21,9 +21,10 @@ namespace project_management_system_backend.Repostories
             public async Task SaveDocumentMetaData(DocumentUploadResult documentResult)
             {
                 documentResult.ProjectId = documentResult.ProjectId == 0 ? null : documentResult.ProjectId;
-                Document documentData = new()
+                documentResult.ClientId = documentResult.ClientId;
+            Document documentData = new()
                 {
-                    ClientName = documentResult.ClientName,
+                    ClientId = documentResult.ClientId,
                     Name = documentResult.Name,
                     Type = (Enums.DocumentTypeEnum)documentResult.Type,
                     Company = documentResult.Company,
@@ -45,7 +46,7 @@ namespace project_management_system_backend.Repostories
                      {
                          DocumentId = d.DocumentId,
                          Name = d.Name,
-                         ClientName = d.ClientName,
+                         ClientId = d.ClientId,
                          Company = d.Company,
                          Date = d.UploadTime,
                          Type = Enum.GetName(d.Type) ?? "Others",
@@ -66,6 +67,8 @@ namespace project_management_system_backend.Repostories
                 _context.Documents.Remove(documentToDelete);
                 await _context.SaveChangesAsync();
             }
+
+
         }
     }
 

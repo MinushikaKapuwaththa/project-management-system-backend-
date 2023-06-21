@@ -48,7 +48,7 @@ namespace project_management_system_backend.Repositories
         {
             newProject.ClientId = newProject.ClientId == 0 ? null : newProject.ClientId;
             oldProject.Name = newProject.Name;
-            oldProject.Key = newProject.Key;
+            //oldProject.Key = newProject.Key;
             oldProject.Description = newProject.Description;
             oldProject.ClientId = newProject.ClientId;
             oldProject.ReportedBy = newProject.ReportedBy;

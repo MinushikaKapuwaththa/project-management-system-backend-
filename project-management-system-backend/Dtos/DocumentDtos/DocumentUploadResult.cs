@@ -5,7 +5,7 @@
         public string Name { get; set; }
         public string ActualFileName { get; set; }
         public int Type { get; set; }
-        public string ClientName { get; set; }
+        public string ClientId  { get; set; }
         public string Company { get; set; }
         public string DocumentPath { get; set; }
         public int Status { get; set; }

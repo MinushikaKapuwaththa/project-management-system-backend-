@@ -3,7 +3,7 @@
     public class ProjectForUpdateDto
     {
         public string Name { get; set; }
-        public string? Key { get; set; }
+        //public string? Key { get; set; }
         public string Description { get; set; }
         public int? ClientId { get; set; }
         public string ReportedBy { get; set; }

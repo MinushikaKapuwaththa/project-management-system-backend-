@@ -117,10 +117,8 @@ namespace projectmanagementsystembackend.Migrations
                     b.Property<int>("ClientType")
                         .HasColumnType("int");
 
-                    b.Property<string>("Company")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
+                    b.Property<int?>("CompanyId")
+                        .HasColumnType("int");
 
                     b.Property<string>("ContactNumber")
                         .IsRequired()
@@ -138,6 +136,8 @@ namespace projectmanagementsystembackend.Migrations
                         .HasColumnType("nvarchar(250)");
 
                     b.HasKey("ClientId");
+
+                    b.HasIndex("CompanyId");
 
                     b.ToTable("Clients");
                 });
@@ -194,7 +194,7 @@ namespace projectmanagementsystembackend.Migrations
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 
-                    b.Property<string>("ClientName")
+                    b.Property<string>("ClientId")
                         .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
@@ -599,10 +599,6 @@ namespace projectmanagementsystembackend.Migrations
                     b.Property<int>("HourlyRate")
                         .HasColumnType("int");
 
-                    b.Property<string>("Key")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
                     b.Property<string>("Lead")
                         .IsRequired()
                         .HasMaxLength(500)
@@ -721,6 +717,15 @@ namespace projectmanagementsystembackend.Migrations
                     b.HasOne("project_management_system_backend.Models.ModuleTask", null)
                         .WithMany("AssiId")
                         .HasForeignKey("ModuleTaskId");
+                });
+
+            modelBuilder.Entity("project_management_system_backend.Models.Client", b =>
+                {
+                    b.HasOne("project_management_system_backend.Models.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId");
+
+                    b.Navigation("Company");
                 });
 
             modelBuilder.Entity("project_management_system_backend.Models.Document", b =>

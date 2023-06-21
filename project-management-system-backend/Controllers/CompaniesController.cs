@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using project_management_system_backend.Dtos;
 using project_management_system_backend.Dtos.CompanyDtos;
 using project_management_system_backend.Repositories;
 
@@ -73,6 +74,22 @@ namespace project_management_system_backend.Controllers
             await _companyRepository.UpdateCompanyAsync(companyToUpdate, _mapper.Map<Models.Company>(project));
 
             return NoContent();
+        }
+
+
+        [HttpGet("GetCompaniesForDropdown")]
+        public async Task<ActionResult<DropdownDto>> GetCompaniesForDropdownAsync()
+        {
+            var company  = await _companyRepository.GetCompaniesAsync();
+
+            //This is for dropdowns in front end
+            var result = company.Select(c => new DropdownDto
+            {
+                Name = c.CompanyName,
+                Value = c.CompanyId
+            });
+
+            return Ok(result);
         }
     }
 }

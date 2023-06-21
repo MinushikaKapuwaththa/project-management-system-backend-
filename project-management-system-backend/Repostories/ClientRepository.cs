@@ -17,6 +17,7 @@ namespace project_management_system_backend.Repositories
 
         public async Task CreateClientAsync(Client clientToCreate)
         {
+            clientToCreate.CompanyId = clientToCreate.CompanyId == 0 ? null : clientToCreate.CompanyId;
             _context.Clients.Add(clientToCreate);
             await _context.SaveChangesAsync();
         }
@@ -42,8 +43,9 @@ namespace project_management_system_backend.Repositories
 
         public async Task UpdateClientAsync(Client clientToUpdate, Client client)
         {
+            client.CompanyId = client.CompanyId == 0 ? null : client.CompanyId; 
             clientToUpdate.ClientName = client.ClientName;
-            clientToUpdate.Company = client.Company;
+            clientToUpdate.CompanyId  = client.CompanyId;
             clientToUpdate.ClientType = client.ClientType;
             clientToUpdate.ContactNumber = client.ContactNumber;
             clientToUpdate.Email = client.Email;

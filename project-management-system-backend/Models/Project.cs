@@ -15,8 +15,8 @@ namespace project_management_system_backend.Models
         [MaxLength(500)]
         public string Name { get; set; }
 
-        [MaxLength(200)]
-        public string? Key { get; set; }
+        //[MaxLength(200)]
+        //public string? Key { get; set; }
 
         [Required]
         [MaxLength(5000)]

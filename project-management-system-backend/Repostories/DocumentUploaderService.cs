@@ -45,7 +45,7 @@ namespace project_management_system_backend.Repostories
                     return new DocumentUploadResult
                     {
                         Name = document.Name,
-                        ClientName = document.ClientName,
+                        ClientId = document.ClientId,
                         Company = document.Company,
                         Type = document.Type,
                         Status = (int)StatusEnum.Active,
