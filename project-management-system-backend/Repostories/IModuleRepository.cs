@@ -8,7 +8,7 @@ namespace project_management_system_backend.Repostories
         Task<Module> GetModuleByID(int id);
         Task<Module> CreatModule(Module project);
         Task<Module> UpdateModule(Module project);
-        Task<Module> DeleteModule(int id);
+        Task DeleteModule(int id);
        
         // Task<List<ModuleTask>> GetTasksByModuleId(int moduleId);
     }

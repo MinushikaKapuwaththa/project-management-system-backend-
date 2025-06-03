@@ -37,14 +37,19 @@ namespace project_management_system_backend.Repostories
             moduleToUpdate.Updated = DateTime.Now;
             moduleToUpdate.Priority = module.Priority;
             moduleToUpdate.Tasks = module.Tasks;
+            moduleToUpdate.Status = module.Status;
+            moduleToUpdate.EndDate = module.EndDate;
+            moduleToUpdate.StartDate = module.StartDate;
             _context.modules.Update(moduleToUpdate);
             _context.SaveChanges();
             return module;
         }
 
-        public async Task<Module> DeleteModule(int id)
+        public async Task DeleteModule(int id)
         {
-            return null;
+            var moduleToDelete = GetModuleByID(id);
+            _context.modules.Remove(moduleToDelete.Result);
+            _context.SaveChanges();
         }
         //public async List<ModuleTask> GetTasksByModuleId(int moduleId)
         //{
